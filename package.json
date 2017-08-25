@@ -1,5 +1,5 @@
 {
-  "name": "Project Name",
+  "name": "elisabethSeite",
   "version": "0.0.1",
   "description": "A review time project",
   "main": "index.js",
@@ -15,7 +15,9 @@
     "skeleton"
   ],
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
     "chalk": "^1.1.3",
     "express": "^4.14.0",
     "pg": "^6.1.0",

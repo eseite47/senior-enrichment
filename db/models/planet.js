@@ -3,9 +3,9 @@ var Sequelize = require('sequelize')
 var db = require('../index.js')
 
 
-module.exports = db.define('user', {
+module.exports = db.define('planet', {
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   imageURL: {
@@ -14,4 +14,5 @@ module.exports = db.define('user', {
       isURL: true
     }
   }
+
 })
