@@ -9,7 +9,7 @@ const db = require ('../db/models')
 
 //Get all the students
 api.get('/students', (req, res, next) =>{
-	db.User.findAll()
+	db.User.findAll({include: [{ all: true, nested: true }]})
 	.then(data => res.json(data))
 	.catch(next)
 })
@@ -34,7 +34,7 @@ api.get('/planets', (req, res, next) =>{
 
 //Get students for a specific planet
 api.get('/planets/:campusName', (req, res, next) => {
-	console.log(req.params.campusName)
+	console.log('I am looking for students from this plannet: ', req.params.campusName)
 	db.Planet.findAll({
 			where:{
 				name: req.params.campusName

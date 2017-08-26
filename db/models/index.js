@@ -9,5 +9,6 @@ const User = require('./user')
 const Planet = require('./planet')
 
 Planet.hasMany(User, {as: 'Students'})
+User.belongsTo(Planet)
 
 module.exports = {User, Planet}

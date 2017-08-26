@@ -20,3 +20,8 @@ p {
   text-align: center;
   padding: 20px auto;
 }
+
+h4, table {
+  color: lightblue
+}
+

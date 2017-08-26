@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Planets extends Component {
   constructor(){
@@ -21,7 +22,12 @@ export default class Planets extends Component {
     console.log()
     return (<div className="container planet">
       {this.state.planets.map(planet => {
-        return <div className="col-lg-6"><p>{planet.name}</p> <img src={planet.imageURL}></img></div>
+        return <div className="col-lg-6">
+          <Link to={`/campuses/${planet.name}`}>
+          <p>{planet.name}</p>
+          <img src={planet.imageURL}></img>
+          </Link>
+          </div>
       })}
       </div>)
     }

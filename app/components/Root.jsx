@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Planets from './PlanetView';
 import Students from './Students';
+import Planet from './Planet';
+
+import { HashRouter, Route, Switch, Link  } from 'react-router-dom';
+
 
 export default class WinterJokes extends Component {
   constructor() {
@@ -30,11 +34,16 @@ export default class WinterJokes extends Component {
 
     // const {joke, answered} = this.state
     return (
-      <div>
-        <Navbar />
-        <Planets />
-        <Students />
-      </div>
+      <HashRouter>
+        <div>
+          <Navbar />
+          <switch>
+          <Route path='/students' component={Students} />
+            <Route exact path='/campuses/:campusName' component={Planet} />
+            <Route exact path='/campuses' component={Planets} />
+          </switch>
+        </div>
+      </HashRouter>
     )
   }
 }
