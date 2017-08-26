@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Planets from './PlanetView';
+import Students from './Students';
 
 export default class WinterJokes extends Component {
   constructor() {
@@ -32,6 +33,7 @@ export default class WinterJokes extends Component {
       <div>
         <Navbar />
         <Planets />
+        <Students />
       </div>
     )
   }

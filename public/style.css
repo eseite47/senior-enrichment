@@ -1,0 +1,22 @@
+body {
+  background-color: black
+}
+
+nav {
+  background-color: gray;
+  text-align: center;
+}
+
+img {
+  height: 300px;
+  display: inline;
+}
+
+p {
+  color: greenyellow
+}
+
+.planet {
+  text-align: center;
+  padding: 20px auto;
+}

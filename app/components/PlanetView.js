@@ -19,9 +19,9 @@ export default class Planets extends Component {
 
   render(){
     console.log()
-    return (<div>
+    return (<div className="container planet">
       {this.state.planets.map(planet => {
-        return <div><p>{planet.name}</p> <img src={planet.imageURL}></img></div>
+        return <div className="col-lg-6"><p>{planet.name}</p> <img src={planet.imageURL}></img></div>
       })}
       </div>)
     }
