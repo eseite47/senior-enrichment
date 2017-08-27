@@ -49,7 +49,7 @@ export default class AddStudent extends Component {
   render(){
     console.log('this.state ', this.state)
     return(
-      <div className='container'>
+      <div className='container form'>
         <form onSubmit={this.handleSubmit}>
           <div>
           <h4>New Student Name</h4>

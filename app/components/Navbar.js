@@ -12,16 +12,18 @@ export default class Navbar extends Component {
         <span className="icon-bar">Campuses</span>
         <span className="icon-bar">Students</span>
       </button>
-      <Link className="navbar-brand" to="/campuses">Hamilton Academy</Link>
+      <Link className="navbar-brand" to="/">Margaret Hamilton Interplanetary Academy</Link>
     </div>
     </div>
 
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
-        <li className="active"><Link to="/campuses">Campuses
+        <li><Link to="/campuses">Campuses
           <span className="sr-only">(current)
             </span></Link></li>
         <li><Link to="/students">Students</Link></li>
+        <li> <Link to="/AddCampus">Request a new Campus</Link></li>
+        <li> <Link to="/AddStudent">Enroll a Student</Link></li>
       </ul>
       </div>
     </nav>

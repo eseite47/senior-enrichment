@@ -21,11 +21,8 @@ export default class Planets extends Component {
   render(){
     //console.log()
     return (<div className="container planet">
-      <Link className="btn btn-block" to="/addCampus">
-            <span className="glyphicon glyphicon-plus"></span> Add Campus
-          </Link>
       {this.state.planets.map(planet => {
-        return <div className="col-lg-6">
+        return <div className="col-lg-4">
           <Link to={`/campuses/${planet.name}`}>
           <p>{planet.name}</p>
           <img src={planet.imageURL}></img>

@@ -10,8 +10,6 @@ module.exports = db.define('user', {
   },
   imageURL: {
     type: Sequelize.STRING,
-    validate: {
-      isURL: true
-    }
+    defaultValue: "http://www.havoca.org/wp-content/uploads/2016/03/icon-user-default-300x300.png",
   }
 })

@@ -8,18 +8,19 @@ const RenderStudents = (props) => {
 
   console.log('students in RenderStudents: ', students)
   return (<div className="container">
-    <Link className="btn btn-block" to="/addStudent">
-            <span className="glyphicon glyphicon-plus"></span> Add Student
-          </Link>
-        {students.map(student => (
+        {students.map((student) => {
+          const planet = student.planet;
+          console.log(planet)
+        return (
             <div className='col-lg-3' key={student.id}>
-            <img className='thumbnail' src={student.imageURL}></img>
-                <Link to={`/students/${student.id}`}>{student.name} <br />
+            <Link to={`/students/${student.id}`}>
+            {student.imageURL && <img className='thumbnail' src={student.imageURL}></img> || <img className='thumbnail' src="http://www.havoca.org/wp-content/uploads/2016/03/icon-user-default-300x300.png"></img>}
+                {student.name} <br />
                 </Link>
-              {/* { props.planet && <Link to={`/campuses/${props.planet}`}>{props.planet}</Link> || student.planet.name && <Link to={`/campuses/${student.planet.name}`}>{student.planet.name} Campus</Link> */}
+              { props.planet && <Link to={`/campuses/${props.planet}`}>{props.planet}</Link> || planet && <Link to={`/campuses/${planet.name}`}>{planet.name} Campus</Link> || <p>Not Enrolled at a Campus</p>
               }
               </div>
-          ))}
+          )})}
     </div>)
 }
 

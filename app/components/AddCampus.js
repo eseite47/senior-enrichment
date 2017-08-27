@@ -21,7 +21,6 @@ export default class AddCampus extends Component {
 
   handleSubmit(e){
     console.log('submit is handled!')
-    e.preventDefault();
     axios.post('api/planets', this.state)
     .then(res => res.data)
     .then(data => {
@@ -32,7 +31,7 @@ export default class AddCampus extends Component {
 
   render(){
     return(
-      <div className='container'>
+      <div className='container form'>
         <form onSubmit={this.handleSubmit}>
           <div>
           <h4>New Campus Name</h4>

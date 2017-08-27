@@ -7,13 +7,32 @@ nav {
   text-align: center;
 }
 
+.navbar .navbar-nav{
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse, .form, .homepage{
+  text-align: center;
+}
+
+.navbar-header {
+  float: left;
+  padding: 15px;
+  text-align: center;
+  width: 100%;
+}
+.navbar-brand {float:none;}
+
 img {
   height: 300px;
   display: inline;
 }
 
 p {
-  color: greenyellow
+  color: lightskyblue;
+  font-size: 150%;
 }
 
 .planet {
@@ -21,12 +40,17 @@ p {
   padding: 20px auto;
 }
 
-h4, table {
-  color: lightblue
+h1 {
+  color: lightblue;
+  text-align: center;
 }
 
 .thumbnail {
   height: 150px;
+}
+
+h4 {
+  color: lightgray
 }
 
 

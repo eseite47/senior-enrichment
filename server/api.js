@@ -45,45 +45,88 @@ api.get('/planets/:campusName', (req, res, next) => {
 	.then(data => res.json(data))
 	.catch(next)
 })
-//adding a student to a planet
+
+//adding a planet
 api.post('/planets', (req, res, next) =>{
 	db.Planet.create(req.body)
 	.then(newCampus => res.status(201).json(newCampus))
   .catch(next);
 })
 
+//Creating a new Student
 api.post('/students', (req, res, next) =>{
 	console.log('req.body ', req.body)
-	// db.User.create({
-	// 	name: req.body.name,
-	// 	imageURL: req.body.imageURL
-	// })
-	db.Planet.findOne({
+	const newStudent = db.User.create({
+		name: req.body.name,
+		imageURL: req.body.imageURL
+	})
+	const chosenCampus = db.Planet.findOne({
 		where:{
 			id: req.body.planetId
 		}
 	})
-	.then(campus => {
-		console.log('campus :', campus)
-		campus.setStudent(req.body)
+
+	Promise.all([newStudent, chosenCampus])
+	.then(values =>{
+		//console.log(values)
+		const student = values[0];
+		const campus = values[1];
+		//console.log('student', student, '\n campus ', campus)
+		campus.setStudent(student)
 	})
 	.then(newUser => {
-		console.log(newUser)
+		//console.log(newUser)
 		res.status(201).json(newUser)})
   .catch(next);
 })
 
 //removing a student
-api.delete('/student', (req, res, next) => {
-	console.log('deleting student')
+api.delete('/students/:studentId', (req, res, next) => {
+	console.log('deleting student ', req.params.studentId)
 	db.User.destroy({
 		where: {
-			id: req.params.id
+			id: req.params.studentId
 		}
 	})
 	.then((returned) => {
 		console.log('student deleted', returned)
-		res.redirect('/')})
+		res.sendStatus(204)
+	})
+	.catch(next)
+})
+
+//removing a planet
+api.delete('/planets/:campusName', (req, res, next) => {
+	console.log('deleting campus ', req.params.campusName)
+	db.Planet.destroy({
+		where: {
+			name: req.params.campusName
+		}
+	})
+	.then((returned) => {
+		console.log('student deleted', returned)
+		res.sendStatus(204)
+	})
+	.catch(next)
+})
+
+//Editing a student profile
+api.put('/students/:studentId', (req, res, next) =>{
+	console.log('you are requesting a change', req.params.studentId)
+	db.Planet.findOne({
+		where: {
+			id: req.body.newCampus
+		}
+	})
+	.then(campus => {
+		console.log(campus)
+		console.log(req.body.student)
+		campus.setStudent(req.body.student);
+	})
+	.then(updatedPage => {
+		console.log(updatedPage)
+		res.json(updatedPage)})
+	.catch(next)
 })
 
 module.exports = api

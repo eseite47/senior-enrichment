@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import RenderStudents from './RenderStudents';
+import ChangeCampus from './ChangeCampus'
 
 export default class SinglePlanet extends Component {
   constructor(){
     super();
     this.state = {
-      planetName: '',
+      campusName: '',
       studentsArr: []
     }
   }
 
-  componentDidMount(){
-    const planetName = this.props.match.params.campusName;
-    //console.log('planet 16 planetName ', planetName)
-    axios.get(`/api/planets/${planetName}`)
+  componentWillMount(){
+    const campusName = this.props.match.params.campusName;
+    //console.log('planet 16 planetName ', campusName)
+    axios.get(`/api/planets/${campusName}`)
     .then(res => res.data)
     .then(data => {
       //console.log('20 campus data: ', data[0].Student)
-      this.setState({planetName: planetName, studentsArr: data[0].Student})
+      this.setState({campusName: campusName, studentsArr: data[0].Student})
     })
   }
 
   render(){
     //console.log('state ', this.state)
     return(
+      <div className="container">
+        <h1>{this.state.campusName}</h1>
+        <div>
+
+     <br />
+      <RenderStudents students={this.state.studentsArr} planet={this.state.campusName}/>
+      </div>
       <div>
-      <h4>{this.state.planetName}</h4>
-      <RenderStudents students={this.state.studentsArr} planet={this.state.planetName}/>
+       <ChangeCampus campus={this.props.match.params.campusName}/>
+          </div>
       </div>
     )
   }
