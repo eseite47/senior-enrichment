@@ -19,7 +19,8 @@ api.get('/students/:studentId', (req, res, next) =>{
 	db.User.findOne({
 		where:{
 			id: req.params.studentId
-		}
+		},
+		include: [{ all: true, nested: true }]
 	})
 	.then(data => res.json(data))
 	.catch(next)
@@ -45,10 +46,44 @@ api.get('/planets/:campusName', (req, res, next) => {
 	.catch(next)
 })
 //adding a student to a planet
-api.post('/planets/:campusName')
+api.post('/planets', (req, res, next) =>{
+	db.Planet.create(req.body)
+	.then(newCampus => res.status(201).json(newCampus))
+  .catch(next);
+})
 
+api.post('/students', (req, res, next) =>{
+	console.log('req.body ', req.body)
+	// db.User.create({
+	// 	name: req.body.name,
+	// 	imageURL: req.body.imageURL
+	// })
+	db.Planet.findOne({
+		where:{
+			id: req.body.planetId
+		}
+	})
+	.then(campus => {
+		console.log('campus :', campus)
+		campus.setStudent(req.body)
+	})
+	.then(newUser => {
+		console.log(newUser)
+		res.status(201).json(newUser)})
+  .catch(next);
+})
 
-//removing a student from a planet
-api.delete('/:campusName', (req, res, next) => res.send('Oops, wrong one'))
+//removing a student
+api.delete('/student', (req, res, next) => {
+	console.log('deleting student')
+	db.User.destroy({
+		where: {
+			id: req.params.id
+		}
+	})
+	.then((returned) => {
+		console.log('student deleted', returned)
+		res.redirect('/')})
+})
 
 module.exports = api

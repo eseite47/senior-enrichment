@@ -19,8 +19,11 @@ export default class Planets extends Component {
   }
 
   render(){
-    console.log()
+    //console.log()
     return (<div className="container planet">
+      <Link className="btn btn-block" to="/addCampus">
+            <span className="glyphicon glyphicon-plus"></span> Add Campus
+          </Link>
       {this.state.planets.map(planet => {
         return <div className="col-lg-6">
           <Link to={`/campuses/${planet.name}`}>
@@ -29,6 +32,7 @@ export default class Planets extends Component {
           </Link>
           </div>
       })}
+
       </div>)
     }
   }

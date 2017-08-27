@@ -8,7 +8,7 @@ const db = require('../index.js')
 const User = require('./user')
 const Planet = require('./planet')
 
-Planet.hasMany(User, {as: 'Students'})
+Planet.hasMany(User, {as: 'Student'})
 User.belongsTo(Planet)
 
 module.exports = {User, Planet}

@@ -14,5 +14,4 @@ module.exports = db.define('planet', {
       isURL: true
     }
   }
-
 })
