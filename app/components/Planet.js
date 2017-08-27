@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import RenderStudents from './RenderStudents';
-import ChangeCampus from './ChangeCampus'
+import EditCampus from './EditCampus'
 
 export default class SinglePlanet extends Component {
   constructor(){
@@ -34,7 +34,7 @@ export default class SinglePlanet extends Component {
       <RenderStudents students={this.state.studentsArr} planet={this.state.campusName}/>
       </div>
       <div>
-       <ChangeCampus campus={this.props.match.params.campusName}/>
+       <EditCampus campus={this.props.match.params.campusName}/>
           </div>
       </div>
     )

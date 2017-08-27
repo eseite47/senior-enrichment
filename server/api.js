@@ -113,20 +113,28 @@ api.delete('/planets/:campusName', (req, res, next) => {
 //Editing a student profile
 api.put('/students/:studentId', (req, res, next) =>{
 	console.log('you are requesting a change', req.params.studentId)
-	db.Planet.findOne({
+	const newCampus = db.Planet.findOne({
 		where: {
-			id: req.body.newCampus
+			name: req.body.newCampus
 		}
 	})
-	.then(campus => {
-		console.log(campus)
-		console.log(req.body.student)
-		campus.setStudent(req.body.student);
+	const transferStudent = db.User.findOne({
+		where: {
+			id: req.params.studentId
+		}
 	})
-	.then(updatedPage => {
-		console.log(updatedPage)
-		res.json(updatedPage)})
-	.catch(next)
+	Promise.all([newCampus, transferStudent])
+	.then(values => {
+		const campus = values[0];
+		const student = values[1];
+		//console.log('student', student, '\n campus ', campus)
+		//campus.setStudent(student)
+		student.update({planetId: campus.id})
+	})
+	.then(changes => {
+		//console.log(newUser)
+		res.status(201).json(changes)})
+  .catch(next);
 })
 
 module.exports = api

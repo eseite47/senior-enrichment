@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import RenderStudents from './RenderStudents';
 
 export default class SinglePlanet extends Component {
   constructor(){
     super();
     this.state = {
       campusName: '',
-      allStudents: []
+      allStudents: [],
+      addStudentId: 0
     }
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleCampusChange = this.handleCampusChange.bind(this)
+    this.changeCampus = this.changeCampus.bind(this)
   }
 
   componentDidMount(){
@@ -20,8 +22,20 @@ export default class SinglePlanet extends Component {
     .then(data => {
       this.setState({campusName: this.props.campus, allStudents: data})
     })
+  }
 
-    }
+  handleCampusChange(){
+    axios.put(`api/students/${this.state.addStudentId}`, {newCampus: this.state.campusName})
+    .then(data =>{
+      console.log('You are edited the campus of this student ', data)
+    })
+  }
+
+  changeCampus(e){
+    // const input = e.target.value;
+    // console.log('input ', input)
+    this.setState({addStudentId: e.target.value})
+  }
 
   handleDelete(e){
     e.preventDefault();
@@ -31,16 +45,21 @@ export default class SinglePlanet extends Component {
   }
 
   render(){
-    //console.log('state ', this.state)
+    console.log('state ', this.state)
+    const students = this.state.allStudents
+    const campusName = this.state.campusName
     return(
       <div className="container">
       <div>
-        <h4>Add Students to {this.state.campusName}</h4>
+        <h4>Add Students to {campusName}</h4>
       <form onSubmit={this.handleCampusChange}>
       <select onChange={this.changeCampus}>
         <option>Select Student</option>
-      {this.state.allStudents && this.state.allStudents.map(function(student) {
-        return <option value={student.id}>{student.name}</option>
+      {students && students.map(function(student, i) {
+        console.log(student.planet)
+         {/* if(student.planet.name !== campusName){ */}
+        return <option key={i} value={student.id}>{student.name}</option>
+      {/* } */}
       })}
       </select>
       <button className="btn btn-info" type="submit" >
