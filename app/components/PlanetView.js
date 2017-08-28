@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import store from '../store'
+import {fetchPlanets} from '../reducers/index'
 
 export default class Planets extends Component {
   constructor(){
     super()
-    this.state = {
-      planets: []
-    }
+    this.state = store.getState()
   }
 
-  componentWillMount(){
-    axios.get('/api/planets')
-    .then(res => res.data)
-    .then(data =>{
-      this.setState({planets: data})
+  componentDidMount(){
+    this.unsubscribe = store.subscribe(()=>{
+      this.setState(store.getState())
     })
+    const thunk = fetchPlanets();
+    store.dispatch(thunk)
+  }
+  componentWillUnmount(){
+    this.unsubscribe();
   }
 
   render(){
+    const planets = this.state.planets;
+    console.log(this.state)
     return (<div className="container planet">
-      {this.state.planets.map((planet, i) => {
+      {planets && planets.map((planet, i) => {
         return <div key={i} className="col-lg-4">
           <Link to={`/campuses/${planet.name}`}>
             <p>{planet.name}</p>

@@ -26,7 +26,6 @@ export default class SinglePlanet extends Component {
     })
   }
 
-
   //Changes status with student to add/remove
   changeCampus(e){
     const name = e.target.name;

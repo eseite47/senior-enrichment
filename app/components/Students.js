@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import store from '../store';
+import {fetchStudents} from '../reducers/index'
 
 import RenderStudents from './RenderStudents'
 
 export default class Students extends Component {
   constructor(){
     super()
-    this.state ={
-      students: []
-    }
+    this.state = store.getState();
   }
 
   componentWillMount(){
-    axios.get('/api/students')
-    .then(res => res.data)
-    .then(data =>{
-      this.setState({students: data})
-    })
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
+    const thunk = fetchStudents();
+    store.dispatch(thunk);
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   render(){
+    const students = this.state.students
     return (
-      <RenderStudents students={this.state.students}/>
+      <RenderStudents students={students}/>
     );
   }
 }

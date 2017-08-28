@@ -17,11 +17,7 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <ul className="nav navbar-nav">
-            <li><Link to="/campuses">Campuses
-              <span className="sr-only">(current)
-              </span>
-              </Link>
-            </li>
+            <li><Link to="/campuses">Campuses</Link></li>
             <li><Link to="/students">Students</Link></li>
             <li> <Link to="/AddCampus">Request a new Campus</Link></li>
             <li> <Link to="/AddStudent">Enroll a Student</Link></li>
