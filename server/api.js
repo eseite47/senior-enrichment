@@ -127,9 +127,12 @@ api.put('/students/:studentId', (req, res, next) =>{
 	.then(values => {
 		const campus = values[0];
 		const student = values[1];
-		//console.log('student', student, '\n campus ', campus)
-		//campus.setStudent(student)
-		student.update({planetId: campus.id})
+		if(campus){
+			student.update({planetId: campus.id})
+		}
+		else {
+			student.update({planetId: null})
+		}
 	})
 	.then(changes => {
 		//console.log(newUser)

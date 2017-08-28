@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default class Planets extends Component {
   constructor(){
     super()
-    this.state ={
+    this.state = {
       planets: []
     }
   }
@@ -19,17 +19,16 @@ export default class Planets extends Component {
   }
 
   render(){
-    //console.log()
     return (<div className="container planet">
-      {this.state.planets.map(planet => {
-        return <div className="col-lg-4">
+      {this.state.planets.map((planet, i) => {
+        return <div key={i} className="col-lg-4">
           <Link to={`/campuses/${planet.name}`}>
-          <p>{planet.name}</p>
-          <img src={planet.imageURL}></img>
+            <p>{planet.name}</p>
+            <img src={planet.imageURL}></img>
           </Link>
           </div>
-      })}
-
+        })
+      }
       </div>)
     }
   }
