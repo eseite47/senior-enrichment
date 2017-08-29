@@ -131,12 +131,6 @@ export function createStudent (state){
       imageURL: state.imageURL,
       planetId: state.planetId
     })
-    .then(res => res.data)
-    .then(data => {
-      console.log('136 ', data)
-      const action = addStudent(data)
-      dispatch(action)
-    })
   }
 }
 
@@ -157,8 +151,6 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, {currentStudent: action.student})
     case ADD_CAMPUS:
       return Object.assign({}, state, {campuses: state.campuses.push(action.planet)})
-    case ADD_STUDENT:
-      return Object.assign({}, state, {allstudents: state.allstudents.push(action.student)})
     default:
       return state
   }

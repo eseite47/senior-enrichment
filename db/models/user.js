@@ -9,7 +9,17 @@ module.exports = db.define('user', {
     allowNull: false
   },
   imageURL: {
-    type: Sequelize.STRING,
-    defaultValue: "http://www.havoca.org/wp-content/uploads/2016/03/icon-user-default-300x300.png",
+    type: Sequelize.STRING
   }
-})
+},
+{
+  hooks: {
+    beforeCreate: (user) =>{
+      if(!user.imageURL){
+        user.imageURL="http://www.havoca.org/wp-content/uploads/2016/03/icon-user-default-300x300.png"
+      }
+    }
+  }
+}
+
+)

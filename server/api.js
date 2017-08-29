@@ -56,24 +56,7 @@ api.post('/planets', (req, res, next) =>{
 //Creating a new Student
 api.post('/students', (req, res, next) =>{
 	console.log('req.body ', req.body)
-	const newStudent = db.User.create({
-		name: req.body.name,
-		imageURL: req.body.imageURL
-	})
-	const chosenCampus = db.Planet.findOne({
-		where:{
-			id: req.body.planetId
-		}
-	})
-
-	Promise.all([newStudent, chosenCampus])
-	.then(values =>{
-		//console.log(values)
-		const student = values[0];
-		const campus = values[1];
-		//console.log('student', student, '\n campus ', campus)
-		campus.setStudent(student)
-	})
+	const newStudent = db.User.create(req.body)
 	.then(newUser => {
 		//console.log(newUser)
 		res.status(201).json(newUser)})
