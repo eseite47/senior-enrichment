@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import store from '../store'
+import {fetchPlanets, createStudent} from '../reducers/index'
 
 export default class AddStudent extends Component {
   constructor(){
     super();
+    this.storeState = store.getState();
     this.state = {
-      planets: [],
       name: '',
       imageURL: '',
       planetId: 0
@@ -14,40 +16,48 @@ export default class AddStudent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(){
-    axios.get('/api/planets')
-    .then(res => res.data)
-    .then(data => {
-      this.setState({planets: data})
-    })
+  componentWillMount(){
+    this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
+
+    const thunk = fetchPlanets()
+    store.dispatch(thunk)
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   handleChange(e){
     //console.log('e ', e.target)
     const input = e.target.value;
     const name = e.target.name;
-    console.log('name ', name, 'input ', input)
+    //console.log('name ', name, 'input ', input)
     this.setState({[name]: input})
-    console.log('handleChange ', this.state)
+    //console.log('handleChange ', this.state)
   }
 
   handleSubmit(e){
     console.log('submit is handled!')
     e.preventDefault();
-    axios.post('api/students', {
-      name: this.state.name,
-      imageURL: this.state.imageURL,
-      planetId: this.state.planetId
-    })
-    .then(res => res.data)
-    .then(data => {
-      console.log('Created a new student: ', data)
-    })
+
+    const thunk = createStudent(this.state)
+    store.dispatch(thunk)
+    // axios.post('api/students', {
+    //   name: this.state.name,
+    //   imageURL: this.state.imageURL,
+    //   planetId: this.state.planetId
+    // })
+    // .then(res => res.data)
+    // .then(data => {
+    //   console.log('Created a new student: ', data)
+    // })
     //console.log(this.state)
   }
 
   render(){
-    console.log('this.state ', this.state)
+    const campuses = this.storeState.campuses;
+    console.log('this.state ', campuses)
+
     return (
       <div className='container form'>
         <form onSubmit={this.handleSubmit}>
@@ -73,7 +83,7 @@ export default class AddStudent extends Component {
             <h4>Campus</h4>
             <select name='planetId' onChange={this.handleChange}>
               <option>Pick Campus</option>
-              {this.state.planets && this.state.planets.map(function(campus, i) {
+              {campuses && campuses.map(function(campus, i) {
                 return <option key={i} value={campus.id}>{campus.name}</option>
               })
             }

@@ -12,6 +12,7 @@ const ADD_CAMPUS = 'ADD_CAMPUS'
 const GET_STUDENTS = 'GET_STUDENTS'; //Get all the students
 const GET_STUDENTS_FROM_CAMPUS = 'GET_STUDENTS_FROM_CAMPUS'; //Get all the students for a campus
 const CURRENT_STUDENT = 'CURRENT_STUDENT';//Get one student
+const ADD_STUDENT = 'ADD_STUDENT'
 
 //Action Creators
 export function getPlanets(planets){
@@ -46,6 +47,11 @@ export function getStudentsFromCampus(campusStudents){
 
 export function setCurrentStudent(student){
   const action = {type: CURRENT_STUDENT, student};
+  return action;
+}
+
+export function addStudent(student){
+  const action = {type: ADD_STUDENT, student};
   return action;
 }
 
@@ -118,6 +124,22 @@ export function createCampus(newCampusData){
   }
 }
 
+export function createStudent (state){
+  return function thunk(dispatch){
+    return axios.post('api/students', {
+      name: state.name,
+      imageURL: state.imageURL,
+      planetId: state.planetId
+    })
+    .then(res => res.data)
+    .then(data => {
+      console.log('136 ', data)
+      const action = addStudent(data)
+      dispatch(action)
+    })
+  }
+}
+
 //Reducer
 const rootReducer = function(state = initialState, action) {
   switch (action.type) {
@@ -134,7 +156,9 @@ const rootReducer = function(state = initialState, action) {
     case CURRENT_STUDENT:
       return Object.assign({}, state, {currentStudent: action.student})
     case ADD_CAMPUS:
-      return Object.assign({}, state, {campuses: campuses.push(action.planet)})
+      return Object.assign({}, state, {campuses: state.campuses.push(action.planet)})
+    case ADD_STUDENT:
+      return Object.assign({}, state, {allstudents: state.allstudents.push(action.student)})
     default:
       return state
   }

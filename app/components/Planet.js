@@ -31,7 +31,7 @@ export default class SinglePlanet extends Component {
 
   render(){
     console.log('campus from store ', this.state)
-    return(
+    return (
       <div className="container">
         <h1>{this.state.currentCampus}</h1>
         <div>
