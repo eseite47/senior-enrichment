@@ -6,6 +6,7 @@ import {createCampus} from '../reducers/index'
 export default class AddCampus extends Component {
   constructor(){
     super();
+    this.storeState = store.getState()
     this.state = {
       name: '',
       imageURL: '',
@@ -13,6 +14,15 @@ export default class AddCampus extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount(){
+    this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
+  }
+
   handleChange(e){
     const input = e.target.value;
     const name = e.target.name;

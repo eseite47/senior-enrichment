@@ -89,7 +89,6 @@ export function fetchStudentsFromCampus(campusName){
     .then(res => res.data)
     .then(data => {
       const students = data[0].Student;
-      //console.log('63 fetching: ', data[0])
       const action = getStudentsFromCampus(students);
       dispatch(action)
     })

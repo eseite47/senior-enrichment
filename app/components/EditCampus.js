@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class SinglePlanet extends Component {
+export default class EditCampus extends Component {
   constructor(){
     super();
     this.state = {
