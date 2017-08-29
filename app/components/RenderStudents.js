@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const RenderStudents = (props) => {
-  console.log('props', props)
+  //console.log('props', props)
   const students = props.students;
-  console.log('students in RenderStudents: ', students)
+  //console.log('students in RenderStudents: ', students)
 
   return (
     <div className="container">
       {students && students.map((student) => {
         const planet = student.planet;
-        console.log(planet)
+        //console.log('13 props ', props.campus)
         return (
           <div className='col-lg-3' key={student.id}>
             <Link to={`/students/${student.id}`}>

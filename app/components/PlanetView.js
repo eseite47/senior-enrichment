@@ -22,14 +22,14 @@ export default class Planets extends Component {
   }
 
   render(){
-    const planets = this.state.planets;
+    const campuses = this.state.campuses;
     console.log(this.state)
     return (<div className="container planet">
-      {planets && planets.map((planet, i) => {
+      {campuses && campuses.map((campus, i) => {
         return <div key={i} className="col-lg-4">
-          <Link to={`/campuses/${planet.name}`}>
-            <p>{planet.name}</p>
-            <img src={planet.imageURL}></img>
+          <Link to={`/campuses/${campus.name}`}>
+            <p>{campus.name}</p>
+            <img src={campus.imageURL}></img>
           </Link>
           </div>
         })

@@ -57,7 +57,7 @@ export default class SinglePlanet extends Component {
   }
 
   render(){
-    console.log('state ', this.state)
+    //console.log('state ', this.state)
     const students = this.state.allStudents
     const campusName = this.state.campusName
 
