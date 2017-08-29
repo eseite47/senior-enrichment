@@ -69,7 +69,7 @@ export default class SinglePlanet extends Component {
               <select name='addStudentId' onChange={this.changeCampus}>
                 <option>Select Student</option>
                 {students && students.map(function(student, i) {
-                console.log(student.planet)
+                //console.log(student.planet)
                 if(!student.planet || student.planet.name !== campusName){
                 return <option key={i} name="addStudentId" value={student.id}>{student.name}</option>
                 }
@@ -84,7 +84,7 @@ export default class SinglePlanet extends Component {
               <select name='removeStudentId' onChange={this.changeCampus}>
                 <option>Select Student</option>
               {students && students.map(function(student, i) {
-                console.log(student.planet)
+                //console.log(student.planet)
                 if(student.planet && student.planet.name === campusName){
                 return <option key={i} value={student.id}>{student.name}</option>
                 }

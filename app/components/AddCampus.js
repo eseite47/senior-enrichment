@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import store from '../store'
+import {createCampus} from '../reducers/index'
 
 export default class AddCampus extends Component {
   constructor(){
@@ -18,11 +20,8 @@ export default class AddCampus extends Component {
   }
 
   handleSubmit(e){
-    axios.post('api/planets', this.state)
-    .then(res => res.data)
-    .then(data => {
-      console.log('Created a new planet: ', data)
-    })
+    const thunk = createCampus(this.state)
+    store.dispatch(thunk)
   }
 
   render(){
