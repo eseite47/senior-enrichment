@@ -13,7 +13,6 @@ export default class EditCampus extends Component {
       removeStudentId: 0
     }
     this.changeCampus = this.changeCampus.bind(this);
-    // this.submitCampusChange = this.submitCampusChange.bind(this)
     this.handleAddStudent = this.handleAddStudent.bind(this);
     this.handleRemoveStudent = this.handleRemoveStudent.bind(this);
     this.handleDeleteCampus = this.handleDeleteCampus.bind(this);
@@ -21,16 +20,8 @@ export default class EditCampus extends Component {
 
   componentDidMount(){
     this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
-    //console.log('props ', this.props)
-    //const campusName = this.props.match.params.campus;
     const studentsList = fetchStudents()
     store.dispatch(studentsList)
-
-    // axios.get('api/students')
-    // .then(res => res.data)
-    // .then(data => {
-    //   this.setState({campusName: this.props.campus, allStudents: data})
-    // })
   }
   componentWillUnmount(){
     this.unsubscribe()
@@ -62,7 +53,7 @@ export default class EditCampus extends Component {
   //Delete Campus
   handleDeleteCampus(e){
     console.log('I want to delete ', this.state)
-    axios.delete(`/api/planets/${this.state.campusName}`, this.state.campusName)
+    axios.delete(`/api/planets/${this.storeState.currentCampus}`, this.storeState.currentCampus)
     .then(console.log('Trying to find redirect'))
   }
 
