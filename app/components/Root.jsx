@@ -16,7 +16,7 @@ const Root = () => {
       <div>
         <Navbar />
         <switch>
-        <Route  path='/students/:studentid' component={StudentProfile} />
+        <Route path='/students/:studentid' component={StudentProfile} />
         <Route exact path='/students' component={Students} />
 
           <Route  path='/campuses/:campusName' component={Planet} />

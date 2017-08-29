@@ -6,7 +6,7 @@ import {fetchPlanets, createStudent} from '../reducers/index'
 export default class AddStudent extends Component {
   constructor(){
     super();
-    this.storeState = store.getState();
+    this.storeState = store.getState()
     this.state = {
       name: '',
       imageURL: '',
@@ -16,9 +16,10 @@ export default class AddStudent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount(){
-    this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
-
+  componentDidMount(){
+    this.unsubscribe = store.subscribe(() => {
+      this.storeState = store.getState()
+    })
     const thunk = fetchPlanets()
     store.dispatch(thunk)
   }
@@ -28,12 +29,9 @@ export default class AddStudent extends Component {
   }
 
   handleChange(e){
-    //console.log('e ', e.target)
     const input = e.target.value;
     const name = e.target.name;
-    //console.log('name ', name, 'input ', input)
     this.setState({[name]: input})
-    //console.log('handleChange ', this.state)
   }
 
   handleSubmit(e){
@@ -42,21 +40,15 @@ export default class AddStudent extends Component {
 
     const thunk = createStudent(this.state)
     store.dispatch(thunk)
-    // axios.post('api/students', {
-    //   name: this.state.name,
-    //   imageURL: this.state.imageURL,
-    //   planetId: this.state.planetId
-    // })
-    // .then(res => res.data)
-    // .then(data => {
-    //   console.log('Created a new student: ', data)
-    // })
-    //console.log(this.state)
   }
 
   render(){
-    const campuses = this.storeState.campuses;
-    console.log('this.state ', campuses)
+    let campuses;
+    if (this.storeState.campuses){
+      campuses = this.storeState.campuses
+    }
+
+    console.log('this.state ', this.storeState)
 
     return (
       <div className='container form'>
@@ -64,6 +56,7 @@ export default class AddStudent extends Component {
           <div>
            <h4>New Student Name</h4>
             <input
+              className='form-control'
               type="text"
               name="name"
               placeholder="New Student Name"
@@ -73,15 +66,18 @@ export default class AddStudent extends Component {
           <div>
             <h4>Student Thumbnail</h4>
             <input
+              className='form-control'
               type="text"
               name="imageURL"
-              placeholder="student Image"
+              placeholder="Student ImageURL"
               onChange={this.handleChange}
             />
           </div>
           <div>
             <h4>Campus</h4>
-            <select name='planetId' onChange={this.handleChange}>
+            <select
+            name='planetId'
+            onChange={this.handleChange}>
               <option>Pick Campus</option>
               {campuses && campuses.map(function(campus, i) {
                 return <option key={i} value={campus.id}>{campus.name}</option>

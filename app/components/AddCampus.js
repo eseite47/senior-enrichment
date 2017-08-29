@@ -41,6 +41,7 @@ export default class AddCampus extends Component {
           <div>
             <h4>New Campus Name</h4>
             <input
+              className='form-control'
               type="text"
               name="name"
               placeholder="New Campus Name"
@@ -50,6 +51,7 @@ export default class AddCampus extends Component {
           <div>
             <h4>Campus Image</h4>
             <input
+              className='form-control'
               type="text"
               name="imageURL"
               placeholder="Campus Image"
