@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import store from '../store'
+import { Link } from 'react-router-dom';
 import {fetchPlanets, createStudent} from '../reducers/index'
 
 export default class AddStudent extends Component {
@@ -38,14 +39,16 @@ export default class AddStudent extends Component {
   }
 
   handleSubmit(e){
-    console.log('submit is handled!')
+    //console.log('submit is handled!', props)
     e.preventDefault();
 
     const thunk = createStudent(this.state)
     store.dispatch(thunk)
+    this.props.history.push('/students')
   }
 
   render(){
+    console.log(this.props)
     let campuses;
     if (this.storeState.campuses){
       campuses = this.storeState.campuses

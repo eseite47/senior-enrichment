@@ -24,6 +24,7 @@ export default class EditDetails extends Component {
     console.log('submit is handled!')
     e.preventDefault();
     axios.put(`/api/students/edit/${parseInt(this.props.match.params.studentid)}`, this.state).then(() => console.log('Edited'))
+    this.props.history.push(`/students/${this.props.match.params.studentid}`)
   }
 
   render(){

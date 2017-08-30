@@ -32,6 +32,7 @@ export default class AddCampus extends Component {
   handleSubmit(e){
     const thunk = createCampus(this.state)
     store.dispatch(thunk)
+    this.props.history.push('/campuses')
   }
 
   render(){
