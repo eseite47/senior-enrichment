@@ -10,7 +10,10 @@ export default class AddStudent extends Component {
     this.state = {
       name: '',
       imageURL: '',
-      planetId: 0
+      planetId: 0,
+      email: '',
+      bio: '',
+      reportCard: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,13 +51,15 @@ export default class AddStudent extends Component {
       campuses = this.storeState.campuses
     }
 
-    console.log('this.state ', this.storeState)
+    console.log('this.state ', this.state)
 
     return (
       <div className='container form'>
+        <h1>Student Enrollment Form</h1>
+        <p>Please feel out the following in order to register a new student.</p><br />
         <form onSubmit={this.handleSubmit}>
-          <div>
-           <h4>New Student Name</h4>
+          <div className="form-group">
+           <h4>Student Name</h4>
             <input
               className='form-control'
               type="text"
@@ -63,7 +68,17 @@ export default class AddStudent extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div>
+          <div className="form-group">
+            <h4>Student email</h4>
+            <input
+              className='form-control'
+              type="text"
+              name="email"
+              placeholder="Student email"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
             <h4>Student Thumbnail</h4>
             <input
               className='form-control'
@@ -73,9 +88,30 @@ export default class AddStudent extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div>
+          <div className="form-group">
+            <h4>Student Bio</h4>
+            <textarea
+              className='form-control'
+              type="text"
+              name="bio"
+              placeholder="Student ImageURL"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <h4>Student report card</h4>
+            <textarea
+              className='form-control'
+              type="text"
+              name="reportCard"
+              placeholder="Student report card"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
             <h4>Campus</h4>
             <select
+            className='form-control'
             name='planetId'
             onChange={this.handleChange}>
               <option>Pick Campus</option>

@@ -126,11 +126,7 @@ export function createCampus(newCampusData){
 
 export function createStudent (state){
   return function thunk(dispatch){
-    return axios.post('api/students', {
-      name: state.name,
-      imageURL: state.imageURL,
-      planetId: state.planetId
-    })
+    return axios.post('api/students', state)
   }
 }
 

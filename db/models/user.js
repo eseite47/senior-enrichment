@@ -10,6 +10,17 @@ module.exports = db.define('user', {
   },
   imageURL: {
     type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  bio: {
+    type: Sequelize.TEXT,
+  },
+  reportCard: {
+    type: Sequelize.TEXT,
   }
 },
 {
@@ -20,6 +31,4 @@ module.exports = db.define('user', {
       }
     }
   }
-}
-
-)
+})

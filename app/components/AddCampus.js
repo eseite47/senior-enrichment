@@ -36,9 +36,11 @@ export default class AddCampus extends Component {
 
   render(){
     return (
+
       <div className='container form'>
+        <h1>Create a new Campus</h1>
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-group">
             <h4>New Campus Name</h4>
             <input
               className='form-control'
@@ -48,7 +50,7 @@ export default class AddCampus extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div>
+          <div className="form-group">
             <h4>Campus Image</h4>
             <input
               className='form-control'

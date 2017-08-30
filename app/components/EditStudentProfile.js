@@ -53,9 +53,9 @@ export default class EditStudentProfile extends Component {
     }
 
     return (
-      <div>
+      <div className="editStudent">
         <h4>Edit {student && student.name}'s records</h4>
-        <p>Change Campus</p>
+        <h4>Change Campus</h4>
         <form onSubmit={this.handleCampusChange}>
           <select name="newCampus" onChange={this.changeCampus}>
             <option>Select Campus</option>
@@ -68,7 +68,7 @@ export default class EditStudentProfile extends Component {
             <span className="glyphicon glyphicon-ok"></span>
           </button>
         </form>
-        <p>Remove {student && student.name}</p>
+        <h4>Remove {student && student.name}</h4>
         <form onSubmit={this.handleDelete}>
           <button className="btn btn-danger" type="submit" >
             <span className="glyphicon glyphicon-minus"></span> Remove Student

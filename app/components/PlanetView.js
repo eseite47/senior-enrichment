@@ -28,7 +28,7 @@ export default class Planets extends Component {
       {campuses && campuses.map((campus, i) => {
         return <div key={i} className="col-lg-4">
           <Link to={`/campuses/${campus.name}`}>
-            <p>{campus.name}</p>
+            <h1>{campus.name}</h1>
             <img src={campus.imageURL}></img>
           </Link>
           </div>

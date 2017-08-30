@@ -56,7 +56,7 @@ api.post('/planets', (req, res, next) =>{
 //Creating a new Student
 api.post('/students', (req, res, next) =>{
 	console.log('req.body ', req.body)
-	const newStudent = db.User.create(req.body)
+	db.User.create(req.body)
 	.then(newUser => {
 		//console.log(newUser)
 		res.status(201).json(newUser)})

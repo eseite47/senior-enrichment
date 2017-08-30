@@ -3,7 +3,7 @@ import React from 'react';
 const HomePage = (props) => {
   return (
     <div className="container homepage">
-      <h1>Welcome to the <br />Margaret Hamilton Interplanetary Academy
+      <h1 id="schoolTitle">Welcome to the <br />Margaret Hamilton Interplanetary Academy
       </h1>
       <hr />
       <p>Conviniently located on the Orion Spur, in a quiet and peaceful solar system, the Margareth Hamilton Interplanetary Academy has the right resources to teach you the skills you need in a fast changing Milky Way.

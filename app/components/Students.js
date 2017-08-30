@@ -26,7 +26,10 @@ export default class Students extends Component {
     const students = this.state.allstudents
 
     return (
-      <RenderStudents students={students}/>
+      <div>
+        <h1>Student Roster</h1>
+        <RenderStudents students={students}/>
+      </div>
     );
   }
 }

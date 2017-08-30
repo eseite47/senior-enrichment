@@ -38,7 +38,15 @@ export default class StudentProfile extends Component {
         {student && <img src={student.imageURL}></img> }
       </div>
       <div className="col-lg-4">
-        {planet && <Link to={`/campuses/${planet.name}`}>{planet.name} Campus</Link> || <p>Not Enrolled at a Campus</p>}
+        <h4>Campus</h4>
+        {planet && <Link to={`/campuses/${planet.name}`}>{planet.name}</Link> || <p>Not Enrolled at a Campus</p>}
+        <h4>Details</h4>
+        <p>id: {student && student.id}</p>
+        <p>email: {student && student.email}</p>
+        <h4>bio</h4>
+        <p>{student && student.bio}</p>
+        <h4>Report Card</h4>
+        <p>{student && student.reportCard}</p>
       </div>
       <div className="col-lg-4">
         <EditStudentProfile student={student} />
