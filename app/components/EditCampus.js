@@ -45,27 +45,20 @@ export default class EditCampus extends Component {
   //Add Student to Campus
   handleAddStudent(e){
     axios.put(`api/students/${this.state.addStudentId}`, {newCampus: this.storeState.currentCampus})
-    .then(data =>{
-      console.log('You have edited the campus of this student ', data)
-    })
   }
 
   //Delete Campus
   handleDeleteCampus(e){
-    console.log('I want to delete ', this.state)
     axios.delete(`/api/planets/${this.storeState.currentCampus}`, this.storeState.currentCampus)
-    .then(console.log('Trying to find redirect'))
+    this.props.history.push('/campuses')
   }
 
   render(){
-
-    console.log('state ', this.state)
     let students;
     let currentCampus;
     if(this.storeState){
       students = this.storeState.allstudents
       currentCampus = this.storeState.currentCampus
-      console.log()
     }
 
     return(

@@ -10,6 +10,7 @@ import StudentProfile from './StudentProfile';
 import AddStudent from './AddStudent';
 import HomePage from './HomePage'
 import EditStudentDetails from './EditStudentDetails'
+import EditStudentProfile from './EditStudentProfile'
 
 const Root = () => {
   return (
@@ -18,6 +19,7 @@ const Root = () => {
         <Navbar />
         <switch>
           <Route path='/students/:studentid/edit' component={EditStudentDetails} />
+          <Route path='/students/:studentid/delete' component={EditStudentProfile} />
           <Route exact path='/students/:studentid' component={StudentProfile} />
           <Route exact path='/students' component={Students} />
           <Route  path='/campuses/:campusName' component={Planet} />

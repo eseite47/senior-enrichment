@@ -49,7 +49,7 @@ export default class StudentProfile extends Component {
         <p>{student && student.reportCard}</p>
       </div>
       <div className="col-lg-4">
-        <EditStudentProfile student={student} />
+        <EditStudentProfile student={student} history={this.props.history}/>
       </div>
     </div>)
   }

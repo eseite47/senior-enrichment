@@ -39,7 +39,7 @@ export default class SinglePlanet extends Component {
           <RenderStudents students={this.state.students} planet={this.state.currentCampus}/>
         </div>
         <div>
-          <EditCampus campus={this.state.currentCampus}/>
+          <EditCampus campus={this.state.currentCampus} history={this.props.history}/>
         </div>
       </div>
     )

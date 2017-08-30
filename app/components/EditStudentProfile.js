@@ -44,6 +44,7 @@ export default class EditStudentProfile extends Component {
   handleDelete(e){
     e.preventDefault();
     axios.delete(`/api/students/${this.props.student.id}`, this.props.student)
+    this.props.history.push('/students')
   }
 
   render(){
