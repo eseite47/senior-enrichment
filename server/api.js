@@ -123,4 +123,15 @@ api.put('/students/:studentId', (req, res, next) =>{
   .catch(next);
 })
 
+api.put('/students/edit/:studentId', (req, res, next) =>{
+	console.log('starting update')
+	db.User.update(req.body, {
+		where:
+		{id: req.params.studentId}
+	})
+	.then(() => {
+		console.log('user was update line 129')
+	})
+})
+
 module.exports = api

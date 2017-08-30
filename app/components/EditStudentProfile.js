@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import store from '../store'
 import {fetchPlanets} from '../reducers/index'
@@ -54,7 +55,7 @@ export default class EditStudentProfile extends Component {
 
     return (
       <div className="editStudent">
-        <h4>Edit {student && student.name}'s records</h4>
+        {student && <h4><Link to={`/students/${student.id}/edit`}>Edit {student && student.name}'s records</Link></h4>}
         <h4>Change Campus</h4>
         <form onSubmit={this.handleCampusChange}>
           <select name="newCampus" onChange={this.changeCampus}>
