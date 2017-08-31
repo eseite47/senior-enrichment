@@ -1,8 +1,8 @@
 # Senior Enrichment Project
 
-I Made a thing!
-Heroku link: https://eseite-hamilton-academy.herokuapp.com/#/
-Youtube Video: https://youtu.be/atSMZxHIp5s
+- I Made a thing!
+- Heroku link: https://eseite-hamilton-academy.herokuapp.com/#/
+- Youtube Video: https://youtu.be/atSMZxHIp5s
 
 ## Getting started
 
