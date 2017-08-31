@@ -26858,6 +26858,10 @@
 	
 	var _EditStudentProfile2 = _interopRequireDefault(_EditStudentProfile);
 	
+	var _footer = __webpack_require__(302);
+	
+	var _footer2 = _interopRequireDefault(_footer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Root = function Root() {
@@ -26880,7 +26884,8 @@
 	        _react2.default.createElement(_reactRouterDom.Route, { path: '/addCampus', component: _AddCampus2.default }),
 	        _react2.default.createElement(_reactRouterDom.Route, { path: '/addStudent', component: _AddStudent2.default }),
 	        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _HomePage2.default })
-	      )
+	      ),
+	      _react2.default.createElement(_footer2.default, null)
 	    )
 	  );
 	};
@@ -31915,6 +31920,41 @@
 	}(_react.Component);
 	
 	exports.default = EditDetails;
+
+/***/ }),
+/* 302 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var footer = function footer() {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "footer" },
+	    _react2.default.createElement(
+	      "p",
+	      null,
+	      "Built by ",
+	      _react2.default.createElement(
+	        "a",
+	        { href: "https://eseite47.github.io/" },
+	        "Elisabeth Seite"
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = footer;
 
 /***/ })
 /******/ ]);

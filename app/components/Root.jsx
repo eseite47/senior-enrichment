@@ -11,6 +11,7 @@ import AddStudent from './AddStudent';
 import HomePage from './HomePage'
 import EditStudentDetails from './EditStudentDetails'
 import EditStudentProfile from './EditStudentProfile'
+import Footer from './footer'
 
 const Root = () => {
   return (
@@ -28,6 +29,7 @@ const Root = () => {
           <Route path='/addStudent' component={AddStudent} />
           <Route exact path='/' component={HomePage} />
         </switch>
+        <Footer />
       </div>
     </HashRouter>
   )

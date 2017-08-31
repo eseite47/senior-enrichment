@@ -27,6 +27,19 @@ nav {
   float:none;
 }
 
+.footer {
+  position: relative;
+  height: 35px;
+  margin-top: 3rem;
+  background-color: #333;
+
+}
+.footer p {
+  text-align: center;
+  color: gray;
+  padding-top: 7px;
+}
+
 img {
   height: 300px;
   display: inline;
