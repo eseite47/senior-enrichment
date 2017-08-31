@@ -39,7 +39,6 @@ export default class AddStudent extends Component {
   }
 
   handleSubmit(e){
-    //console.log('submit is handled!', props)
     e.preventDefault();
 
     const thunk = createStudent(this.state)
@@ -48,13 +47,10 @@ export default class AddStudent extends Component {
   }
 
   render(){
-    console.log(this.props)
     let campuses;
     if (this.storeState.campuses){
       campuses = this.storeState.campuses
     }
-
-    console.log('this.state ', this.state)
 
     return (
       <div className='container form'>

@@ -50,7 +50,7 @@ export default class EditStudentProfile extends Component {
   render(){
     const student = this.props.student;
     let campuses;
-    if(this.storeState.campuses){
+    if (this.storeState.campuses){
       campuses = this.storeState.campuses
     }
 

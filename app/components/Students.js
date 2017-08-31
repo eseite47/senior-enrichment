@@ -22,7 +22,6 @@ export default class Students extends Component {
   }
 
   render(){
-    //console.log('25 ', this.state)
     const students = this.state.allstudents
 
     return (

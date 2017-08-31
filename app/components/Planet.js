@@ -17,11 +17,6 @@ export default class SinglePlanet extends Component {
       this.setState(store.getState())
     })
     const campusName = this.props.match.params.campusName;
-    // axios.get(`/api/planets/${campusName}`)
-    // .then(res => res.data)
-    // .then(data => {
-    //   this.setState({campusName: campusName, studentsArr: data[0].Student})
-    // })
     console.log('campus name ', campusName)
     const thunk = fetchStudentsFromCampus(campusName)
     store.dispatch(thunk)

@@ -30599,7 +30599,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      //console.log('25 ', this.state)
 	      var students = this.state.allstudents;
 	
 	      return _react2.default.createElement(
@@ -30639,9 +30638,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var RenderStudents = function RenderStudents(props) {
-	  //console.log('props', props)
 	  var students = props.students;
-	  //console.log('students in RenderStudents: ', students)
 	
 	  return _react2.default.createElement(
 	    'div',
@@ -30744,11 +30741,6 @@
 	        _this2.setState(_store2.default.getState());
 	      });
 	      var campusName = this.props.match.params.campusName;
-	      // axios.get(`/api/planets/${campusName}`)
-	      // .then(res => res.data)
-	      // .then(data => {
-	      //   this.setState({campusName: campusName, studentsArr: data[0].Student})
-	      // })
 	      console.log('campus name ', campusName);
 	      var thunk = (0, _index.fetchStudentsFromCampus)(campusName);
 	      _store2.default.dispatch(thunk);
@@ -30860,7 +30852,7 @@
 	      this.unsubscribe();
 	    }
 	
-	    //Changes status with student to add/remove
+	    //Changes local state with student to add/remove
 	
 	  }, {
 	    key: 'changeCampus',
@@ -30870,7 +30862,7 @@
 	      this.setState(_defineProperty({}, name, e.target.value));
 	    }
 	
-	    //Add Student to Campus
+	    //Remove student from Campus
 	
 	  }, {
 	    key: 'handleRemoveStudent',
@@ -31202,7 +31194,6 @@
 	      var _this2 = this;
 	
 	      var studentId = this.props.match.params.studentid;
-	      //console.log(studentId)
 	      this.unsubscribe = _store2.default.subscribe(function () {
 	        return _this2.setState(_store2.default.getState());
 	      });
@@ -31565,7 +31556,6 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
-	      //console.log('submit is handled!', props)
 	      e.preventDefault();
 	
 	      var thunk = (0, _index.createStudent)(this.state);
@@ -31575,13 +31565,10 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      var campuses = void 0;
 	      if (this.storeState.campuses) {
 	        campuses = this.storeState.campuses;
 	      }
-	
-	      console.log('this.state ', this.state);
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -31814,12 +31801,6 @@
 	  }
 	
 	  _createClass(EditDetails, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      //this.setState(this.props.student);
-	      console.log(this.props.match.params);
-	    }
-	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(e) {
 	      var input = e.target.value;

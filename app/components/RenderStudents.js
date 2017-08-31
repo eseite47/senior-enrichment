@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const RenderStudents = (props) => {
-  //console.log('props', props)
   const students = props.students;
-  //console.log('students in RenderStudents: ', students)
 
   return (
     <div className="container">

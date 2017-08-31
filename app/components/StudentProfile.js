@@ -13,7 +13,6 @@ export default class StudentProfile extends Component {
 
   componentDidMount(){
     const studentId = this.props.match.params.studentid
-    //console.log(studentId)
     this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
 
     const thunk = fetchOneStudent(studentId)

@@ -9,11 +9,6 @@ export default class EditDetails extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(){
-    //this.setState(this.props.student);
-    console.log(this.props.match.params)
-  }
-
   handleChange(e){
     const input = e.target.value;
     const name = e.target.name;

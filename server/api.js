@@ -35,7 +35,6 @@ api.get('/planets', (req, res, next) =>{
 
 //Get students for a specific planet
 api.get('/planets/:campusName', (req, res, next) => {
-	console.log('I am looking for students from this plannet: ', req.params.campusName)
 	db.Planet.findAll({
 			where:{
 				name: req.params.campusName
@@ -53,12 +52,10 @@ api.post('/planets', (req, res, next) =>{
   .catch(next);
 })
 
-//Creating a new Student
+//adding a new Student
 api.post('/students', (req, res, next) =>{
-	console.log('req.body ', req.body)
 	db.User.create(req.body)
 	.then(newUser => {
-		//console.log(newUser)
 		res.status(201).json(newUser)})
   .catch(next);
 })
@@ -93,7 +90,7 @@ api.delete('/planets/:campusName', (req, res, next) => {
 	.catch(next)
 })
 
-//Editing a student profile
+//Editing a student's planet
 api.put('/students/:studentId', (req, res, next) =>{
 	console.log('you are requesting a change', req.params.studentId)
 	const newCampus = db.Planet.findOne({
@@ -123,6 +120,7 @@ api.put('/students/:studentId', (req, res, next) =>{
   .catch(next);
 })
 
+//updating a student's details
 api.put('/students/edit/:studentId', (req, res, next) =>{
 	console.log('starting update')
 	db.User.update(req.body, {

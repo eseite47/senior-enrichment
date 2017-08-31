@@ -27,14 +27,14 @@ export default class EditCampus extends Component {
     this.unsubscribe()
   }
 
-  //Changes status with student to add/remove
+  //Changes local state with student to add/remove
   changeCampus(e){
     const name = e.target.name;
     console.log('value ', e.target.value, 'name ', name)
     this.setState({[name]: e.target.value})
   }
 
-  //Add Student to Campus
+  //Remove student from Campus
   handleRemoveStudent(e){
     axios.put(`api/students/${this.state.removeStudentId}`, {newCampus: null})
     .then(data =>{
