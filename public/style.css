@@ -28,8 +28,11 @@ nav {
 }
 
 .footer {
-  position: relative;
+  position: fixed;
   height: 35px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   margin-top: 3rem;
   background-color: #333;
 
