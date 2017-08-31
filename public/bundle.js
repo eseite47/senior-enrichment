@@ -30769,6 +30769,7 @@
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(_RenderStudents2.default, { students: this.state.students, planet: this.state.currentCampus })
 	        ),
+	        _react2.default.createElement('hr', null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -30811,8 +30812,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30829,11 +30828,15 @@
 	
 	    _this.storeState = _store2.default.getState();
 	    _this.state = {
-	      campusName: "",
+	      campusName: "", //handle campus change for students
 	      addStudentId: 0,
 	      removeStudentId: 0
 	    };
-	    _this.changeCampus = _this.changeCampus.bind(_this);
+	    _this.newState = {
+	      // placeholder to update campus
+	    };
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.handleAddStudent = _this.handleAddStudent.bind(_this);
 	    _this.handleRemoveStudent = _this.handleRemoveStudent.bind(_this);
 	    _this.handleDeleteCampus = _this.handleDeleteCampus.bind(_this);
@@ -30850,6 +30853,7 @@
 	      });
 	      var studentsList = (0, _index.fetchStudents)();
 	      _store2.default.dispatch(studentsList);
+	      //this.setState({name: this.props.campus})
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -30860,11 +30864,17 @@
 	    //Changes local state with student to add/remove
 	
 	  }, {
-	    key: 'changeCampus',
-	    value: function changeCampus(e) {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
 	      var name = e.target.name;
 	      console.log('value ', e.target.value, 'name ', name);
-	      this.setState(_defineProperty({}, name, e.target.value));
+	      this.newState[name] = e.target.value;
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      _axios2.default.put('/api/planets/' + this.storeState.currentCampus, this.newState);
 	    }
 	
 	    //Remove student from Campus
@@ -30902,13 +30912,70 @@
 	        students = this.storeState.allstudents;
 	        currentCampus = this.storeState.currentCampus;
 	      }
-	
+	      console.log('state: ', this.state);
+	      console.log('prios ', this.newState);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
 	        _react2.default.createElement(
-	          'div',
+	          'h1',
 	          null,
+	          'Edit Campus Name'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form col-lg-6' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            ' Please fill in both inputs '
+	          ),
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleSubmit },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'New Campus Name'
+	              ),
+	              _react2.default.createElement('input', {
+	                className: 'form-control',
+	                type: 'text',
+	                name: 'name',
+	                placeholder: 'New Name',
+	                onChange: this.handleChange
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Edit Campus Image'
+	              ),
+	              _react2.default.createElement('input', {
+	                className: 'form-control',
+	                type: 'text',
+	                name: 'imageURL',
+	                placeholder: 'Campus Image',
+	                onChange: this.handleChange,
+	                value: this.state.imageURL
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit disabled', className: 'btn btn-default' },
+	              'Submit'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-lg-6' },
 	          _react2.default.createElement(
 	            'h4',
 	            null,
@@ -30920,7 +30987,7 @@
 	            { onSubmit: this.handleAddStudent },
 	            _react2.default.createElement(
 	              'select',
-	              { name: 'addStudentId', onChange: this.changeCampus },
+	              { name: 'addStudentId', onChange: this.handleChange },
 	              _react2.default.createElement(
 	                'option',
 	                null,
@@ -30954,7 +31021,7 @@
 	            { onSubmit: this.handleRemoveStudent },
 	            _react2.default.createElement(
 	              'select',
-	              { name: 'removeStudentId', onChange: this.changeCampus },
+	              { name: 'removeStudentId', onChange: this.handleChange },
 	              _react2.default.createElement(
 	                'option',
 	                null,

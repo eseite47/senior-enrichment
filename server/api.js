@@ -122,13 +122,17 @@ api.put('/students/:studentId', (req, res, next) =>{
 
 //updating a student's details
 api.put('/students/edit/:studentId', (req, res, next) =>{
-	console.log('starting update')
+	//console.log('starting update')
 	db.User.update(req.body, {
 		where:
 		{id: req.params.studentId}
 	})
-	.then(() => {
-		console.log('user was update line 129')
+})
+
+api.put('/planets/:campusName', (req, res, next) =>{
+	db.Planet.update(req.body, {
+		where:
+		{name: req.params.campusName}
 	})
 })
 

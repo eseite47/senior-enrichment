@@ -8,11 +8,15 @@ export default class EditCampus extends Component {
     super();
     this.storeState = store.getState()
     this.state = {
-      campusName: "",
+      campusName: "", //handle campus change for students
       addStudentId: 0,
-      removeStudentId: 0
+      removeStudentId: 0,
     }
-    this.changeCampus = this.changeCampus.bind(this);
+    this.newState ={
+    // placeholder to update campus
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddStudent = this.handleAddStudent.bind(this);
     this.handleRemoveStudent = this.handleRemoveStudent.bind(this);
     this.handleDeleteCampus = this.handleDeleteCampus.bind(this);
@@ -22,16 +26,23 @@ export default class EditCampus extends Component {
     this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
     const studentsList = fetchStudents()
     store.dispatch(studentsList)
+    //this.setState({name: this.props.campus})
   }
+
   componentWillUnmount(){
     this.unsubscribe()
   }
 
   //Changes local state with student to add/remove
-  changeCampus(e){
+  handleChange(e){
     const name = e.target.name;
     console.log('value ', e.target.value, 'name ', name)
-    this.setState({[name]: e.target.value})
+    this.newState[name] = e.target.value
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    axios.put(`/api/planets/${this.storeState.currentCampus}`, this.newState)
   }
 
   //Remove student from Campus
@@ -60,13 +71,44 @@ export default class EditCampus extends Component {
       students = this.storeState.allstudents
       currentCampus = this.storeState.currentCampus
     }
-
+    console.log('state: ', this.state)
+    console.log('prios ', this.newState)
     return(
+
       <div className="container">
-        <div>
+        <h1>Edit Campus Name</h1>
+        <div className='form col-lg-6'>
+        <p> Please fill in both inputs </p>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <h4>New Campus Name</h4>
+            <input
+              className='form-control'
+              type="text"
+              name="name"
+              placeholder="New Name"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <h4>Edit Campus Image</h4>
+            <input
+              className='form-control'
+              type="text"
+              name="imageURL"
+              placeholder="Campus Image"
+              onChange={this.handleChange}
+              value={this.state.imageURL}
+            />
+          </div>
+          <button type="submit disabled" className="btn btn-default">Submit
+          </button>
+        </form>
+      </div>
+        <div className="col-lg-6">
           <h4>Enroll a Student to {currentCampus}</h4>
             <form onSubmit={this.handleAddStudent}>
-              <select name='addStudentId' onChange={this.changeCampus}>
+              <select name='addStudentId' onChange={this.handleChange}>
                 <option>Select Student</option>
                 {students && students.map(function(student, i) {
                 //console.log(student.planet)
@@ -81,7 +123,7 @@ export default class EditCampus extends Component {
             </form>
           <h4> Remove a Student from {currentCampus}</h4>
             <form onSubmit={this.handleRemoveStudent}>
-              <select name='removeStudentId' onChange={this.changeCampus}>
+              <select name='removeStudentId' onChange={this.handleChange}>
                 <option>Select Student</option>
               {students && students.map(function(student, i) {
                 //console.log(student.planet)
