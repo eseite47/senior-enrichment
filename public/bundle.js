@@ -24343,7 +24343,12 @@
 	
 	function createStudent(state) {
 	  return function thunk(dispatch) {
-	    return _axios2.default.post('api/students', state);
+	    return _axios2.default.post('api/students', state).then(function (res) {
+	      return res.data;
+	    }).then(function (data) {
+	      var action = addStudent(data);
+	      dispatch(action);
+	    });
 	  };
 	}
 	
@@ -24387,14 +24392,14 @@
 	      return Object.assign({}, state, { currentStudent: action.student });
 	    case ADD_CAMPUS:
 	      return Object.assign({}, state, { campuses: state.campuses.push(action.planet) });
+	    case ADD_STUDENT:
+	      return Object.assign({}, state, { allstudents: state.allstudents.concat([action.student]) });
 	    case DELETE_CAMPUS:
 	      return Object.assign({}, state, { campuses: state.campuses.filter(function (campus) {
-	          return campus.name !== action.planet.name;
+	          return campus.name !== action.planet;
 	        }) });
 	    case EDIT_STUDENT_CAMPUS:
 	      if (action.act === 'add') {
-	        console.log('students array', state.students);
-	        console.log('adding', action.student);
 	        return Object.assign({}, state, { students: state.students.concat([action.student]) });
 	      } else {
 	        return Object.assign({}, state, { students: state.students.filter(function (stud) {
@@ -26924,7 +26929,7 @@
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
 	      _react2.default.createElement(
-	        'switch',
+	        _reactRouterDom.Switch,
 	        null,
 	        _react2.default.createElement(_reactRouterDom.Route, { path: '/students/:studentid/edit', component: _EditStudentDetails2.default }),
 	        _react2.default.createElement(_reactRouterDom.Route, { path: '/students/:studentid/delete', component: _EditStudentProfile2.default }),
@@ -30598,10 +30603,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
 	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -30720,7 +30721,7 @@
 	        ) || _react2.default.createElement(
 	          'p',
 	          null,
-	          'Not Enrolled at a Campus'
+	          'No Campus'
 	        )
 	      );
 	    })
@@ -30871,14 +30872,8 @@
 	    var _this = _possibleConstructorReturn(this, (EditCampus.__proto__ || Object.getPrototypeOf(EditCampus)).call(this));
 	
 	    _this.storeState = _store2.default.getState();
-	    _this.state = {
-	      campusName: "", //handle campus change for students
-	      addStudentId: 0,
-	      removeStudentId: 0
-	    };
-	    _this.newState = {
-	      // placeholder to update campus
-	    };
+	    _this.state = {};
+	
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.handleAddStudent = _this.handleAddStudent.bind(_this);
@@ -30893,11 +30888,10 @@
 	      var _this2 = this;
 	
 	      this.unsubscribe = _store2.default.subscribe(function () {
-	        return _this2.storeState = _store2.default.getState();
+	        _this2.storeState = _store2.default.getState();
 	      });
 	      var studentsList = (0, _index.fetchStudents)();
 	      _store2.default.dispatch(studentsList);
-	      //this.setState({name: this.props.campus})
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -30918,7 +30912,7 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
-	      _axios2.default.put('/api/planets/' + this.storeState.currentCampus, this.newState);
+	      _axios2.default.put('/api/planets/' + this.storeState.currentCampus, this.state);
 	      this.props.history.push('/campuses');
 	    }
 	
@@ -30963,23 +30957,19 @@
 	        students = this.storeState.allstudents;
 	        currentCampus = this.storeState.currentCampus;
 	      }
-	
+	      console.log('newState ', this.nextState);
+	      console.log('state', this.state);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
 	        _react2.default.createElement(
 	          'h1',
 	          null,
-	          'Edit Campus Name'
+	          'Edit Campus'
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'form col-lg-6' },
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            ' Please fill in both inputs '
-	          ),
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSubmit },
@@ -31044,7 +31034,6 @@
 	                'Select Student'
 	              ),
 	              students && students.map(function (student, i) {
-	                //console.log(student.planet)
 	                if (!student.planet || student.planet.name !== currentCampus) {
 	                  return _react2.default.createElement(
 	                    'option',

@@ -14,7 +14,7 @@ const RenderStudents = (props) => {
               {student.imageURL && <img className='thumbnail' src={student.imageURL}></img>}
                 {student.name} <br />
             </Link>
-            { props.planet && <Link to={`/campuses/${props.planet}`}>{props.planet}</Link> || planet && <Link to={`/campuses/${planet.name}`}>{planet.name} Campus</Link> || <p>Not Enrolled at a Campus</p>
+            { props.planet && <Link to={`/campuses/${props.planet}`}>{props.planet}</Link> || planet && <Link to={`/campuses/${planet.name}`}>{planet.name} Campus</Link> || <p>No Campus</p>
               }
           </div>
         )

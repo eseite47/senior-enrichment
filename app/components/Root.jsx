@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch, Link  } from 'react-router-dom';
+import { HashRouter, Route, Switch} from 'react-router-dom';
 
 import Navbar from './Navbar';
 import PlanetsView from './PlanetView';
@@ -18,7 +18,7 @@ const Root = () => {
     <HashRouter>
       <div>
         <Navbar />
-        <switch>
+        <Switch>
           <Route path='/students/:studentid/edit' component={EditStudentDetails} />
           <Route path='/students/:studentid/delete' component={EditStudentProfile} />
           <Route exact path='/students/:studentid' component={StudentProfile} />
@@ -28,7 +28,7 @@ const Root = () => {
           <Route path='/addCampus' component={AddCampus} />
           <Route path='/addStudent' component={AddStudent} />
           <Route exact path='/' component={HomePage} />
-        </switch>
+        </Switch>
         <Footer />
       </div>
     </HashRouter>

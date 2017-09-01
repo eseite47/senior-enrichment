@@ -139,6 +139,11 @@ export function createCampus(newCampusData){
 export function createStudent (state){
   return function thunk(dispatch){
     return axios.post('api/students', state)
+    .then(res => res.data)
+    .then(data => {
+      const action = addStudent(data)
+      dispatch(action)
+    })
   }
 }
 
@@ -181,14 +186,14 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, {currentStudent: action.student})
     case ADD_CAMPUS:
       return Object.assign({}, state, {campuses: state.campuses.push(action.planet)})
+    case ADD_STUDENT:
+      return Object.assign({}, state, {allstudents: state.allstudents.concat([action.student])})
     case DELETE_CAMPUS:
       return Object.assign({}, state, {campuses: state.campuses.filter(campus => {
-        return campus.name !== action.planet.name}
+        return campus.name !== action.planet}
       )})
     case EDIT_STUDENT_CAMPUS:
       if (action.act === 'add'){
-        console.log('students array', state.students)
-        console.log('adding', action.student)
         return Object.assign({}, state, {students: state.students.concat([action.student])})
       }
       else {

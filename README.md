@@ -2,7 +2,7 @@
 
 - I Made a thing!
 - Heroku link: https://eseite-hamilton-academy.herokuapp.com/#/
-- Youtube Video: https://youtu.be/atSMZxHIp5s
+- Youtube Video: https://youtu.be/wnEh5psxK_k
 
 ## Getting started
 

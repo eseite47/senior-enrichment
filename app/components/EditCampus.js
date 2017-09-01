@@ -10,13 +10,8 @@ export default class EditCampus extends Component {
     super();
     this.storeState = store.getState()
     this.state = {
-      campusName: "", //handle campus change for students
-      addStudentId: 0,
-      removeStudentId: 0,
     }
-    this.newState ={
-    // placeholder to update campus
-    }
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddStudent = this.handleAddStudent.bind(this);
@@ -25,10 +20,10 @@ export default class EditCampus extends Component {
   }
 
   componentDidMount(){
-    this.unsubscribe = store.subscribe(() => this.storeState = store.getState())
+    this.unsubscribe = store.subscribe(() => {
+      this.storeState = store.getState()})
     const studentsList = fetchStudents()
     store.dispatch(studentsList)
-    //this.setState({name: this.props.campus})
   }
 
   componentWillUnmount(){
@@ -44,7 +39,7 @@ export default class EditCampus extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    axios.put(`/api/planets/${this.storeState.currentCampus}`, this.newState)
+    axios.put(`/api/planets/${this.storeState.currentCampus}`, this.state)
     this.props.history.push('/campuses')
   }
 
@@ -75,17 +70,16 @@ export default class EditCampus extends Component {
   render(){
     let students;
     let currentCampus;
-    if(this.storeState){
+    if (this.storeState){
       students = this.storeState.allstudents
       currentCampus = this.storeState.currentCampus
     }
-
-
-    return(
+    console.log('newState ', this.nextState)
+    console.log('state', this.state)
+    return (
       <div className="container">
-        <h1>Edit Campus Name</h1>
+        <h1>Edit Campus</h1>
         <div className='form col-lg-6'>
-        <p> Please fill in both inputs </p>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <h4>New Campus Name</h4>
@@ -118,7 +112,6 @@ export default class EditCampus extends Component {
               <select name='addStudentId' onChange={this.handleChange}>
                 <option>Select Student</option>
                 {students && students.map(function(student, i) {
-                //console.log(student.planet)
                 if (!student.planet || student.planet.name !== currentCampus){
                 return <option key={i} name="addStudentId" value={student.id}>{student.name}</option>
                 }
@@ -134,7 +127,7 @@ export default class EditCampus extends Component {
                 <option>Select Student</option>
               {students && students.map(function(student, i) {
                 //console.log(student.planet)
-                if(student.planet && student.planet.name === currentCampus){
+                if (student.planet && student.planet.name === currentCampus){
                 return <option key={i} value={student.id}>{student.name}</option>
                 }
                 })
