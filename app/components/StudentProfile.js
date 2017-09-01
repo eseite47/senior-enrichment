@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import { Link } from 'react-router-dom';
 import store from '../store'
-import { setCurrentStudent, fetchOneStudent } from '../reducers/index'
+import { fetchOneStudent } from '../reducers/index'
 import EditStudentProfile from './EditStudentProfile'
 
 export default class StudentProfile extends Component {

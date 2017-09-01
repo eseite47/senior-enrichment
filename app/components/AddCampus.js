@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import store from '../store'
 import {createCampus} from '../reducers/index'
 
@@ -30,6 +29,7 @@ export default class AddCampus extends Component {
   }
 
   handleSubmit(e){
+    e.preventDefault()
     const thunk = createCampus(this.state)
     store.dispatch(thunk)
     this.props.history.push('/campuses')

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HomePage = (props) => {
+const HomePage = () => {
   return (
     <div className="container homepage">
       <h1 id="schoolTitle">Welcome to the <br />Margaret Hamilton Interplanetary Academy

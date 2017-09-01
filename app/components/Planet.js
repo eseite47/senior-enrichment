@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
 import store from '../store';
 import RenderStudents from './RenderStudents';
 import EditCampus from './EditCampus';

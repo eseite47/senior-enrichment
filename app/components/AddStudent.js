@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import store from '../store'
-import { Link } from 'react-router-dom';
 import {fetchPlanets, createStudent} from '../reducers/index'
 
 export default class AddStudent extends Component {

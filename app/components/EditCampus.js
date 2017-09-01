@@ -64,6 +64,7 @@ export default class EditCampus extends Component {
 
   //Delete Campus
   handleDeleteCampus(e){
+    e.preventDefault()
     const state = this.storeState
     console.log('props 64', state)
     const deleteCampus = deleteCampusThunk(state.currentCampus)

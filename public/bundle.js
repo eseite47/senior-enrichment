@@ -30505,10 +30505,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
 	var _reactRouterDom = __webpack_require__(253);
 	
 	var _store = __webpack_require__(217);
@@ -30749,10 +30745,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
 	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -30955,6 +30947,7 @@
 	  }, {
 	    key: 'handleDeleteCampus',
 	    value: function handleDeleteCampus(e) {
+	      e.preventDefault();
 	      var state = this.storeState;
 	      console.log('props 64', state);
 	      var deleteCampus = (0, _index.deleteCampusThunk)(state.currentCampus);
@@ -31137,10 +31130,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
 	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -31199,6 +31188,7 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      e.preventDefault();
 	      var thunk = (0, _index.createCampus)(this.state);
 	      _store2.default.dispatch(thunk);
 	      this.props.history.push('/campuses');
@@ -31280,10 +31270,6 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
 	
 	var _reactRouterDom = __webpack_require__(253);
 	
@@ -31615,15 +31601,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(219);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
 	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
-	
-	var _reactRouterDom = __webpack_require__(253);
 	
 	var _index = __webpack_require__(218);
 	
@@ -31855,7 +31835,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var HomePage = function HomePage(props) {
+	var HomePage = function HomePage() {
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "container homepage" },
