@@ -24182,10 +24182,12 @@
 	exports.getCampusFromStudents = getCampusFromStudents;
 	exports.addCampus = addCampus;
 	exports.setCurrentPlanet = setCurrentPlanet;
+	exports.deleteCampus = deleteCampus;
 	exports.getStudents = getStudents;
 	exports.getStudentsFromCampus = getStudentsFromCampus;
 	exports.setCurrentStudent = setCurrentStudent;
 	exports.addStudent = addStudent;
+	exports.editStudentCampus = editStudentCampus;
 	exports.fetchPlanets = fetchPlanets;
 	exports.fetchStudents = fetchStudents;
 	exports.fetchOneStudent = fetchOneStudent;
@@ -24193,6 +24195,8 @@
 	exports.fetchCampusFromStudent = fetchCampusFromStudent;
 	exports.createCampus = createCampus;
 	exports.createStudent = createStudent;
+	exports.deleteCampusThunk = deleteCampusThunk;
+	exports.editStudentCampusThunk = editStudentCampusThunk;
 	
 	var _redux = __webpack_require__(194);
 	
@@ -24205,19 +24209,21 @@
 	var initialState = {};
 	
 	//Action Types
-	var GET_PLANETS = 'GET_PLANETS'; //Get all the planets
+	var GET_CAMPUSES = 'GET_CAMPUSES'; //Get all the planets
 	var GET_CAMPUS_FROM_STUDENT = 'GET_CAMPUS_FROM_STUDENT'; //Find the campus of a student
-	var CURRENT_PLANET = 'CURRENT_PLANET'; //Get one planet
+	var CURRENT_CAMPUS = 'CURRENT_CAMPUS'; //Get one planet
 	var ADD_CAMPUS = 'ADD_CAMPUS';
+	var DELETE_CAMPUS = 'DELETE CAMPUS';
 	
 	var GET_STUDENTS = 'GET_STUDENTS'; //Get all the students
 	var GET_STUDENTS_FROM_CAMPUS = 'GET_STUDENTS_FROM_CAMPUS'; //Get all the students for a campus
+	var EDIT_STUDENT_CAMPUS = 'EDIT_STUDENT_CAMPUS';
 	var CURRENT_STUDENT = 'CURRENT_STUDENT'; //Get one student
 	var ADD_STUDENT = 'ADD_STUDENT';
 	
 	//Action Creators
 	function getPlanets(planets) {
-	  var action = { type: GET_PLANETS, planets: planets };
+	  var action = { type: GET_CAMPUSES, planets: planets };
 	  return action;
 	}
 	
@@ -24232,7 +24238,12 @@
 	}
 	
 	function setCurrentPlanet(planet) {
-	  var action = { type: CURRENT_PLANET, planet: planet };
+	  var action = { type: CURRENT_CAMPUS, planet: planet };
+	  return action;
+	}
+	
+	function deleteCampus(planet) {
+	  var action = { type: DELETE_CAMPUS, planet: planet };
 	  return action;
 	}
 	
@@ -24253,6 +24264,11 @@
 	
 	function addStudent(student) {
 	  var action = { type: ADD_STUDENT, student: student };
+	  return action;
+	}
+	
+	function editStudentCampus(student, act) {
+	  var action = { type: EDIT_STUDENT_CAMPUS, student: student, act: act };
 	  return action;
 	}
 	
@@ -24331,13 +24347,31 @@
 	  };
 	}
 	
+	function deleteCampusThunk(planet) {
+	  return function thunk(dispatch) {
+	    return _axios2.default.delete('/api/planets/' + planet, planet).then(function (res) {
+	      dispatch(deleteCampus(planet));
+	    });
+	  };
+	}
+	
+	function editStudentCampusThunk(student, campus, act) {
+	  console.log('editing campus', student, campus, act);
+	  return function thunk(dispatch) {
+	    return _axios2.default.put('api/students/' + student, { newCampus: campus }).then(function (res) {
+	      console.log('something happened with axios', student, act);
+	      dispatch(editStudentCampus(student, act));
+	    });
+	  };
+	}
+	
 	//Reducer
 	var rootReducer = function rootReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case GET_PLANETS:
+	    case GET_CAMPUSES:
 	      return Object.assign({}, state, { campuses: action.planets });
 	    case GET_STUDENTS:
 	      return Object.assign({}, state, { allstudents: action.students });
@@ -24345,12 +24379,26 @@
 	      return Object.assign({}, state, { students: action.campusStudents });
 	    case GET_CAMPUS_FROM_STUDENT:
 	      return Object.assign({}, state, { campus: action.campus });
-	    case CURRENT_PLANET:
+	    case CURRENT_CAMPUS:
 	      return Object.assign({}, state, { currentCampus: action.planet });
 	    case CURRENT_STUDENT:
 	      return Object.assign({}, state, { currentStudent: action.student });
 	    case ADD_CAMPUS:
 	      return Object.assign({}, state, { campuses: state.campuses.push(action.planet) });
+	    case DELETE_CAMPUS:
+	      return Object.assign({}, state, { campuses: state.campuses.filter(function (campus) {
+	          return campus.name !== action.planet.name;
+	        }) });
+	    case EDIT_STUDENT_CAMPUS:
+	      console.log('reaching cases', action.act);
+	      if (action.act === 'add') {
+	        console.log('adding');
+	        return Object.assign({}, state, { students: state.students.push(action.student) });
+	      } else {
+	        return Object.assign({}, state, { students: state.students.filter(function (stud) {
+	            return stud.name !== action.student.name;
+	          }) });
+	      }
 	    default:
 	      return state;
 	  }
@@ -30812,6 +30860,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30868,13 +30918,14 @@
 	    value: function handleChange(e) {
 	      var name = e.target.name;
 	      console.log('value ', e.target.value, 'name ', name);
-	      this.newState[name] = e.target.value;
+	      this.setState(_defineProperty({}, name, e.target.value));
 	    }
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
 	      _axios2.default.put('/api/planets/' + this.storeState.currentCampus, this.newState);
+	      this.props.history.push('/campuses');
 	    }
 	
 	    //Remove student from Campus
@@ -30882,9 +30933,9 @@
 	  }, {
 	    key: 'handleRemoveStudent',
 	    value: function handleRemoveStudent(e) {
-	      _axios2.default.put('api/students/' + this.state.removeStudentId, { newCampus: null }).then(function (data) {
-	        console.log('You are edited the campus of this student ', data);
-	      });
+	      e.preventDefault();
+	      var editCampusThunk = (0, _index.editStudentCampusThunk)(this.state.removeStudentId, null, 'remove');
+	      _store2.default.dispatch(editCampusThunk);
 	    }
 	
 	    //Add Student to Campus
@@ -30892,7 +30943,9 @@
 	  }, {
 	    key: 'handleAddStudent',
 	    value: function handleAddStudent(e) {
-	      _axios2.default.put('api/students/' + this.state.addStudentId, { newCampus: this.storeState.currentCampus });
+	      e.preventDefault();
+	      var editCampusThunk = (0, _index.editStudentCampusThunk)(this.state.addStudentId, this.storeState.currentCampus, 'add');
+	      _store2.default.dispatch(editCampusThunk);
 	    }
 	
 	    //Delete Campus
@@ -30900,7 +30953,10 @@
 	  }, {
 	    key: 'handleDeleteCampus',
 	    value: function handleDeleteCampus(e) {
-	      _axios2.default.delete('/api/planets/' + this.storeState.currentCampus, this.storeState.currentCampus);
+	      var state = this.storeState;
+	      console.log('props 64', state);
+	      var deleteCampus = (0, _index.deleteCampusThunk)(state.currentCampus);
+	      _store2.default.dispatch(deleteCampus);
 	      this.props.history.push('/campuses');
 	    }
 	  }, {
@@ -30912,8 +30968,7 @@
 	        students = this.storeState.allstudents;
 	        currentCampus = this.storeState.currentCampus;
 	      }
-	      console.log('state: ', this.state);
-	      console.log('prios ', this.newState);
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
@@ -31298,7 +31353,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'col-lg-4' },
-	          student && _react2.default.createElement('img', { src: student.imageURL })
+	          student && _react2.default.createElement('img', { className: 'profilePic', src: student.imageURL })
 	        ),
 	        _react2.default.createElement(
 	          'div',

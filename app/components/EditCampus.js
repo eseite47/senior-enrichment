@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import store from '../store'
-import {fetchStudents} from '../reducers/index'
+import {fetchStudents,
+  deleteCampusThunk,
+  editStudentCampusThunk} from '../reducers/index'
 
 export default class EditCampus extends Component {
   constructor(){
@@ -37,30 +39,35 @@ export default class EditCampus extends Component {
   handleChange(e){
     const name = e.target.name;
     console.log('value ', e.target.value, 'name ', name)
-    this.newState[name] = e.target.value
+    this.setState({[name]: e.target.value})
   }
 
   handleSubmit(e){
     e.preventDefault();
     axios.put(`/api/planets/${this.storeState.currentCampus}`, this.newState)
+    this.props.history.push('/campuses')
   }
 
   //Remove student from Campus
   handleRemoveStudent(e){
-    axios.put(`api/students/${this.state.removeStudentId}`, {newCampus: null})
-    .then(data =>{
-      console.log('You are edited the campus of this student ', data)
-    })
+    e.preventDefault()
+    const editCampusThunk = editStudentCampusThunk(this.state.removeStudentId, null, 'remove');
+    store.dispatch(editCampusThunk)
   }
 
   //Add Student to Campus
   handleAddStudent(e){
-    axios.put(`api/students/${this.state.addStudentId}`, {newCampus: this.storeState.currentCampus})
+    e.preventDefault()
+    const editCampusThunk = editStudentCampusThunk(this.state.addStudentId, this.storeState.currentCampus, 'add')
+    store.dispatch(editCampusThunk)
   }
 
   //Delete Campus
   handleDeleteCampus(e){
-    axios.delete(`/api/planets/${this.storeState.currentCampus}`, this.storeState.currentCampus)
+    const state = this.storeState
+    console.log('props 64', state)
+    const deleteCampus = deleteCampusThunk(state.currentCampus)
+    store.dispatch(deleteCampus)
     this.props.history.push('/campuses')
   }
 
@@ -71,10 +78,9 @@ export default class EditCampus extends Component {
       students = this.storeState.allstudents
       currentCampus = this.storeState.currentCampus
     }
-    console.log('state: ', this.state)
-    console.log('prios ', this.newState)
-    return(
 
+
+    return(
       <div className="container">
         <h1>Edit Campus Name</h1>
         <div className='form col-lg-6'>

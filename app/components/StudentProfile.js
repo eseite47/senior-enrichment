@@ -34,7 +34,7 @@ export default class StudentProfile extends Component {
     <div className='container'>
       <h1>{student && student.name}</h1>
       <div className="col-lg-4">
-        {student && <img src={student.imageURL}></img> }
+        {student && <img className="profilePic" src={student.imageURL}></img> }
       </div>
       <div className="col-lg-4">
         <h4>Campus</h4>

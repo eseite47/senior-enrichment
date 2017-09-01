@@ -4,19 +4,21 @@ import axios from 'axios'
 const initialState = {}
 
 //Action Types
-const GET_PLANETS = 'GET_PLANETS'; //Get all the planets
+const GET_CAMPUSES = 'GET_CAMPUSES'; //Get all the planets
 const GET_CAMPUS_FROM_STUDENT = 'GET_CAMPUS_FROM_STUDENT' //Find the campus of a student
-const CURRENT_PLANET = 'CURRENT_PLANET' //Get one planet
+const CURRENT_CAMPUS = 'CURRENT_CAMPUS' //Get one planet
 const ADD_CAMPUS = 'ADD_CAMPUS'
+const DELETE_CAMPUS = 'DELETE CAMPUS'
 
 const GET_STUDENTS = 'GET_STUDENTS'; //Get all the students
 const GET_STUDENTS_FROM_CAMPUS = 'GET_STUDENTS_FROM_CAMPUS'; //Get all the students for a campus
+const EDIT_STUDENT_CAMPUS = 'EDIT_STUDENT_CAMPUS'
 const CURRENT_STUDENT = 'CURRENT_STUDENT';//Get one student
 const ADD_STUDENT = 'ADD_STUDENT'
 
 //Action Creators
 export function getPlanets(planets){
-  const action = {type: GET_PLANETS, planets};
+  const action = {type: GET_CAMPUSES, planets};
   return action;
 }
 
@@ -31,7 +33,12 @@ export function addCampus(planet){
 }
 
 export function setCurrentPlanet(planet){
-  const action = {type: CURRENT_PLANET, planet};
+  const action = {type: CURRENT_CAMPUS, planet};
+  return action;
+}
+
+export function deleteCampus (planet){
+  const action = {type: DELETE_CAMPUS, planet};
   return action;
 }
 
@@ -52,6 +59,11 @@ export function setCurrentStudent(student){
 
 export function addStudent(student){
   const action = {type: ADD_STUDENT, student};
+  return action;
+}
+
+export function editStudentCampus(student, act){
+  const action = {type: EDIT_STUDENT_CAMPUS, student, act}
   return action;
 }
 
@@ -130,10 +142,30 @@ export function createStudent (state){
   }
 }
 
+export function deleteCampusThunk (planet){
+  return function thunk (dispatch){
+    return axios.delete(`/api/planets/${planet}`, planet)
+    .then(res =>{
+      dispatch(deleteCampus(planet))
+    })
+  }
+}
+
+export function editStudentCampusThunk (student, campus, act){
+  console.log('editing campus', student, campus, act)
+  return function thunk (dispatch){
+    return axios.put(`api/students/${student}`, {newCampus: campus})
+    .then(res => {
+      console.log('something happened with axios', student, act)
+      dispatch(editStudentCampus(student, act))
+    })
+  }
+}
+
 //Reducer
 const rootReducer = function(state = initialState, action) {
   switch (action.type) {
-    case GET_PLANETS:
+    case GET_CAMPUSES:
       return Object.assign({}, state, {campuses: action.planets});
     case GET_STUDENTS:
       return Object.assign({}, state, {allstudents: action.students});
@@ -141,12 +173,25 @@ const rootReducer = function(state = initialState, action) {
       return Object.assign({}, state, {students: action.campusStudents});
     case GET_CAMPUS_FROM_STUDENT:
       return Object.assign({}, state, {campus: action.campus})
-    case CURRENT_PLANET:
+    case CURRENT_CAMPUS:
       return Object.assign({}, state, {currentCampus: action.planet})
     case CURRENT_STUDENT:
       return Object.assign({}, state, {currentStudent: action.student})
     case ADD_CAMPUS:
       return Object.assign({}, state, {campuses: state.campuses.push(action.planet)})
+    case DELETE_CAMPUS:
+      return Object.assign({}, state, {campuses: state.campuses.filter(campus => {
+        return campus.name !== action.planet.name}
+      )})
+    case EDIT_STUDENT_CAMPUS:
+        console.log('reaching cases', action.act)
+      if (action.act === 'add'){
+        console.log('adding')
+        return Object.assign({}, state, {students: state.students.push(action.student)})
+      }
+      else {
+        return Object.assign({}, state, {students: state.students.filter(stud => stud.name !== action.student.name)})
+      }
     default:
       return state
   }
