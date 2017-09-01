@@ -151,15 +151,17 @@ export function deleteCampusThunk (planet){
   }
 }
 
-export function editStudentCampusThunk (student, campus, act){
-  console.log('editing campus', student, campus, act)
+export function editStudentCampusThunk (studentid, campus, act){
+  console.log('editing campus', studentid, campus, act)
   return function thunk (dispatch){
-    return axios.put(`api/students/${student}`, {newCampus: campus})
-    .then(res => {
-      console.log('something happened with axios', student, act)
-      dispatch(editStudentCampus(student, act))
+    return axios.put(`api/students/${studentid}`, {newCampus: campus})
+    .then( axios.get(`/api/students/${studentid}`)
+      .then(res => res.data)
+      .then(res => {
+      console.log('something happened with axios', res, act)
+      dispatch(editStudentCampus(res, act))
     })
-  }
+    )}
 }
 
 //Reducer
@@ -184,13 +186,15 @@ const rootReducer = function(state = initialState, action) {
         return campus.name !== action.planet.name}
       )})
     case EDIT_STUDENT_CAMPUS:
-        console.log('reaching cases', action.act)
       if (action.act === 'add'){
-        console.log('adding')
-        return Object.assign({}, state, {students: state.students.push(action.student)})
+        console.log('students array', state.students)
+        console.log('adding', action.student)
+        return Object.assign({}, state, {students: state.students.concat([action.student])})
       }
       else {
-        return Object.assign({}, state, {students: state.students.filter(stud => stud.name !== action.student.name)})
+        return Object.assign({}, state, {students: state.students.filter(stud => {
+          return stud.id !== action.student.id})
+        })
       }
     default:
       return state

@@ -8,7 +8,6 @@ const RenderStudents = (props) => {
     <div className="container">
       {students && students.map((student) => {
         const planet = student.planet;
-        //console.log('13 props ', props.campus)
         return (
           <div className='col-lg-3' key={student.id}>
             <Link to={`/students/${student.id}`}>

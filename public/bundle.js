@@ -24355,13 +24355,15 @@
 	  };
 	}
 	
-	function editStudentCampusThunk(student, campus, act) {
-	  console.log('editing campus', student, campus, act);
+	function editStudentCampusThunk(studentid, campus, act) {
+	  console.log('editing campus', studentid, campus, act);
 	  return function thunk(dispatch) {
-	    return _axios2.default.put('api/students/' + student, { newCampus: campus }).then(function (res) {
-	      console.log('something happened with axios', student, act);
-	      dispatch(editStudentCampus(student, act));
-	    });
+	    return _axios2.default.put('api/students/' + studentid, { newCampus: campus }).then(_axios2.default.get('/api/students/' + studentid).then(function (res) {
+	      return res.data;
+	    }).then(function (res) {
+	      console.log('something happened with axios', res, act);
+	      dispatch(editStudentCampus(res, act));
+	    }));
 	  };
 	}
 	
@@ -24390,14 +24392,15 @@
 	          return campus.name !== action.planet.name;
 	        }) });
 	    case EDIT_STUDENT_CAMPUS:
-	      console.log('reaching cases', action.act);
 	      if (action.act === 'add') {
-	        console.log('adding');
-	        return Object.assign({}, state, { students: state.students.push(action.student) });
+	        console.log('students array', state.students);
+	        console.log('adding', action.student);
+	        return Object.assign({}, state, { students: state.students.concat([action.student]) });
 	      } else {
 	        return Object.assign({}, state, { students: state.students.filter(function (stud) {
-	            return stud.name !== action.student.name;
-	          }) });
+	            return stud.id !== action.student.id;
+	          })
+	        });
 	      }
 	    default:
 	      return state;
@@ -30698,7 +30701,6 @@
 	    { className: 'container' },
 	    students && students.map(function (student) {
 	      var planet = student.planet;
-	      //console.log('13 props ', props.campus)
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'col-lg-3', key: student.id },
